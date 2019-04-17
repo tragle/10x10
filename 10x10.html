@@ -98,7 +98,6 @@
 
       let problem;
       let answered = false;
-      let done = false;
       let timer;
 
       const setTimer = () => {
@@ -113,9 +112,7 @@
         num.value = '';
         problem = getProblem();
         if (!problem) { 
-          done = true;
-          answer.disabled = true;
-          question.innerHTML = 'Done!';
+          container.innerHTML = 'Done!';
         } else {
           question.innerHTML = `${problem.x} × ${problem.y} = `;
           setTimer();
@@ -137,7 +134,6 @@
       }
 
       answer.onsubmit = (e) => {
-        if (done) return false;
         if (answered) {
           refreshProblem();
           result.innerHTML = '__';
