@@ -8,32 +8,35 @@
       
      body { 
         font-family: 'Charter', Palatino, serif; 
-        font-size: 72px;
+        font-size: 40pt;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        height: 100%;
-        margin: 0;
     }
 
-    #container {
-      margin-top: 100px;
+    #main-container {
+      margin-top: 20%;
+    }
+
+    #question-container {
+      width: 11ch;
     }
 
     #num {
-      height: 72px;
-      font-size: 72px;
+      height: 40pt;
+      font-size: 40pt;
       width: 4ch;
+      border: solid 1px black;
     }
  
     </style>
   </head>
   <body>
-    <div id="container">
-      <span id="question"></span><span id="result">__</span>
+    <div id="main-container">
+      <div id="question-container">
+        <span id="question"></span><span id="result"></span>
+      </div>
       <form id="answer">
-        <input id="num" type="text" />
+        <input id="num" type="number" maxlength="3" size="3" />
       </form>
     </div>
 
@@ -61,9 +64,14 @@
       }
 
       const init = () => {
-        problemsData = localStorage.getItem('problems');
+        problemsData = localStorage.getItem('mult-problems');
         if (problemsData) problems = JSON.parse(problemsData);
         if (!problems) problems = getProblems();
+      }
+
+      const reset = () => {
+        localStorage.removeItem('mult-problems');
+        init();
       }
 
       const getProblem = () => {
@@ -81,7 +89,7 @@
         let time = new Date(problem.time);
         time.setDate(time.getDate() + problem.level);
         problem.time = time.valueOf();
-        localStorage.setItem('problems', JSON.stringify(problems));
+        localStorage.setItem('mult-problems', JSON.stringify(problems));
       }
 
       const handleCorrect = (index) => {
@@ -95,6 +103,7 @@
       const answer = document.getElementById('answer');
       const num = document.getElementById('num');
       const result = document.getElementById('result');
+      const main = document.getElementById('main-container');
 
       let problem;
       let answered = false;
@@ -112,12 +121,11 @@
         num.value = '';
         problem = getProblem();
         if (!problem) { 
-          container.innerHTML = 'Done for today!';
+          main.innerHTML = 'Done for today!';
         } else {
           question.innerHTML = `${problem.x} × ${problem.y} = `;
           setTimer();
         }
-
       }
 
       const handleAnswer = () => {
