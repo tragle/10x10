@@ -127,6 +127,7 @@
       const refreshProblem = () => {
         num.value = '';
         problem = getProblem();
+        count.innerHTML = getProblemSet().length;
         if (!problem) { 
           main.innerHTML = 'Done for today!';
         } else {
@@ -152,7 +153,6 @@
         if (answered) {
           refreshProblem();
           result.innerHTML = '__';
-          count.innerHTML = getProblemSet().length;
         } else {
           handleAnswer();
         }
