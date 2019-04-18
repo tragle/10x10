@@ -9,16 +9,19 @@
      body { 
         font-family: 'Charter', Palatino, serif; 
         font-size: 40pt;
+        height: 45vh;
         display: flex;
-        justify-content: center;
-    }
-
-    #main-container {
-      margin-top: 20%;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
     }
 
     #question-container {
-      width: 12ch;
+      width: 13ch;
+    }
+
+    #count {
+      font-size: 10pt;
     }
 
     #num {
@@ -31,6 +34,7 @@
     </style>
   </head>
   <body>
+    <div id="count"></div>
     <div id="main-container">
       <div id="question-container">
         <span id="question"></span><span id="result"></span>
@@ -74,10 +78,12 @@
         init();
       }
 
+      const getProblemSet = () => problems.filter(r => r.time < Date.now());
+      
       const getProblem = () => {
-        let set = problems.filter(r => r.time < Date.now());
+        let set = getProblemSet();
         return set[Math.floor(Math.random() * set.length)];
-      }
+      };
 
       const updateProblem = (index, isCorrect) => {
         const problem = problems[index];
@@ -104,6 +110,7 @@
       const num = document.getElementById('num');
       const result = document.getElementById('result');
       const main = document.getElementById('main-container');
+      const count = document.getElementById('count');
 
       let problem;
       let answered = false;
@@ -145,6 +152,7 @@
         if (answered) {
           refreshProblem();
           result.innerHTML = '__';
+          count.innerHTML = getProblemSet().length;
         } else {
           handleAnswer();
         }
