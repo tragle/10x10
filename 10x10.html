@@ -124,10 +124,15 @@
         clearTimeout(timer);
       }
 
+      const getCountString = () => {
+        let len = getProblemSet().length;
+        return Array(len).fill('.').join('');
+      }
+
       const refreshProblem = () => {
         num.value = '';
         problem = getProblem();
-        count.innerHTML = getProblemSet().length;
+        count.innerHTML = getCountString() ;
         if (!problem) { 
           main.innerHTML = 'Done for today!';
         } else {
